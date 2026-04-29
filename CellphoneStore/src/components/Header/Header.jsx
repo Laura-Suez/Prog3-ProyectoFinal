@@ -1,61 +1,42 @@
+import { Navbar, Container, Nav, Form, Button } from "react-bootstrap";
+
 const Header = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-      <div className="container">
-        
-        <a className="navbar-brand fw-bold" href="#">
+    <Navbar expand="lg" bg="dark" variant="dark" className="shadow-sm">
+      <Container>
+
+        <Navbar.Brand href="#">
           CellphoneStore
-        </a>
+        </Navbar.Brand>
 
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarMenu"
-          aria-controls="navbarMenu"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
+        <Navbar.Toggle aria-controls="navbar-menu" />
 
-        <div className="collapse navbar-collapse" id="navbarMenu">
-          <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">
-                Inicio
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#productos">
-                Celulares
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#ofertas">
-                Accesorios
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#contacto">
-                Contacto
-              </a>
-            </li>
-          </ul>
-          <form className="d-flex mt-3 mt-lg-0" role="search">
-            <input
-              className="form-control me-2"
+        <Navbar.Collapse id="navbar-menu">
+          <Nav className="ms-auto">
+
+            <Nav.Link href="#">Inicio</Nav.Link>
+            <Nav.Link href="#productos">Celulares</Nav.Link>
+            <Nav.Link href="#ofertas">Accesorios</Nav.Link>
+            <Nav.Link href="#contacto">Contacto</Nav.Link>
+
+          </Nav>
+
+          <Form className="d-flex mt-3 mt-lg-0">
+            <Form.Control
               type="search"
               placeholder="Buscar"
+              className="me-2"
               aria-label="Search"
             />
-            <button className="btn btn-outline-light" type="submit">
+            <Button variant="outline-light">
               Buscar
-            </button>
-          </form>
-        </div>
-      </div>
-    </nav>
+            </Button>
+          </Form>
+
+        </Navbar.Collapse>
+
+      </Container>
+    </Navbar>
   );
 };
 
