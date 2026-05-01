@@ -1,4 +1,6 @@
-import Layout from "./components/Layout/Layout";
+import ContacForm from './Components/ContactForm/ContacForm';
+import React from 'react'
+import Accordion from "./Components/FAQ/Accordion";
 
 function App() {
 
@@ -150,13 +152,12 @@ function App() {
   },
 ];
 
-
-  return (
-    <Layout>
-      <h1>CellphoneStore</h1>
-
-    </Layout>
-  );
+  return <>
+      <ContacForm />
+      <div className="row d-flex justify-center">
+        <Accordion />
+      </div>  
+  </>;
 }
 
 export default App;
