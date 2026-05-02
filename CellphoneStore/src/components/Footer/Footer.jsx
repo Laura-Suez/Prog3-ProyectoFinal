@@ -1,18 +1,14 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
-function Footer() {
+const Footer = () => {
   return (
     <footer className="bg-dark text-white text-center text-lg-start mt-auto">
-
       <Container className="p-4">
         <Row>
-
           <Col lg={6} md={12} className="mb-4">
             <h5 className="text-uppercase">CellphoneStore</h5>
-            <p>
-              
-            </p>
+            <p></p>
           </Col>
 
           <Col lg={3} md={6} className="mb-4">
@@ -51,16 +47,12 @@ function Footer() {
               </li>
             </ul>
           </Col>
-
         </Row>
       </Container>
 
-      <div className="text-center p-3 bg-secondary">
-        © 2026 CellphoneStore
-      </div>
-
+      <div className="text-center p-3 bg-secondary">© 2026 CellphoneStore</div>
     </footer>
   );
-}
+};
 
 export default Footer;
