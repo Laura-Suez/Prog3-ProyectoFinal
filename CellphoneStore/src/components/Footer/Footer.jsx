@@ -15,7 +15,7 @@ const Footer = () => {
             <h5 className="text-uppercase">Ayuda</h5>
             <ul className="list-unstyled mb-0">
               <li>
-                <a href="/" className="text-white text-decoration-none">
+                <a href="#" className="text-white text-decoration-none">
                   Contacto
                 </a>
               </li>
@@ -32,16 +32,19 @@ const Footer = () => {
             <ul className="list-unstyled">
               <li>
                 <a href="#" className="text-white text-decoration-none">
+                  
                   Instagram
                 </a>
               </li>
               <li>
                 <a href="#" className="text-white text-decoration-none">
+                  
                   Facebook
                 </a>
               </li>
               <li>
                 <a href="#" className="text-white text-decoration-none">
+                  
                   Twitter
                 </a>
               </li>
