@@ -15,7 +15,7 @@ const Header = () => {
             {" "}
             {/* mx-auto para centrar los links */}
             <Nav.Link href="/home">Inicio</Nav.Link>
-            <Nav.Link href="#productos">Productos</Nav.Link>
+            <Nav.Link href="/products">Productos</Nav.Link>
             <Nav.Link href="/contact-Us">Contacto</Nav.Link>
             <Nav.Link href="/faq">Preguntas frecuentes</Nav.Link>
           </Nav>
