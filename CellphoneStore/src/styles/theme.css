@@ -1,0 +1,101 @@
+/* 1. VARIABLES NATIVAS (Opcional, para mantener la flexibilidad) */
+:root {
+  --my-primary: #0057ff;
+  --my-secondary: #000000;
+  --my-tertiary: #64748b;
+  --my-neutral: #f8fafc;
+  --body-bg: #ffffff;
+  --font-family: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+/* El contenedor que creamos en el Layout */
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ocupa el alto de la ventana */
+}
+
+/* El Container de Bootstrap que envuelve el Outlet */
+.main-content {
+  flex: 1 0 auto; /* Se estira para ocupar el espacio sobrante */
+}
+/* 2. REESTABLECIMIENTO Y GENERALES */
+body {
+  background-color: var(--body-bg);
+  color: var(--my-secondary);
+  font-family: var(--font-family);
+}
+
+/* Botones rectos (sobrescritura de Bootstrap) */
+.btn {
+  border-radius: 0px !important;
+}
+
+/* 3. NAVBAR */
+.navbar {
+  border-bottom: 1px solid #eeeeee;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: var(--my-neutral) !important;
+}
+
+.navbar-brand {
+  font-weight: 800;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+}
+
+.nav-link {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-left: 1rem;
+  color: var(--my-tertiary) !important;
+}
+
+.nav-link:hover {
+  color: var(--my-primary) !important;
+  border-bottom: 2px solid var(--my-primary) !important;
+}
+
+/* 4. FOOTER */
+footer {
+  border-top: 1px solid #eeeeee;
+  background-color: var(--my-neutral) !important;
+  color: var(--my-secondary);
+  flex-shrink: 0;
+}
+
+footer h5 {
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  margin-bottom: 1.5rem;
+}
+
+/* Enlaces del Footer */
+footer a {
+  transition: all 0.2s ease;
+  font-size: 0.85rem;
+  color: var(--my-tertiary) !important;
+  text-decoration: none; /* Quitamos subrayado por defecto */
+}
+
+footer a:hover {
+  color: var(--my-primary) !important;
+  padding-left: 5px; /* Efecto de desplazamiento */
+}
+
+/* 5. COPYRIGHT */
+.footer-copyright {
+  background-color: var(--my-neutral) !important;
+  color: var(--my-tertiary);
+  font-size: 0.8rem;
+  border-top: 1px solid #eeeeee;
+}

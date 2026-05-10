@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 import Home from "./components/Home/Home";
 import ContactUs from "./components/Contact-Us/ContactUs";
 import Layout from "./components/Layout/Layout";
-import Products from "./components/Products/Products";
+import FaqAccordion from "./components/FAQ/FaqAccordion";
 
 function App() {
   const productList = [
@@ -166,13 +166,14 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route element={<Layout />}>
-              <Route path="/" element={<Navigate to="/home" replace />} />
               <Route path="/home" element={<Home />} />
               <Route
                 path="/products"
                 element={<Products productList={productList} />}
               />
               <Route path="/contact-Us" element={<ContactUs />} />
+              <Route path="/contact-Us" element={<ContactUs />} />
+              <Route path="/faq" element={<FaqAccordion />} />
               {/* <Route path="/cellphones" element={} />
             <Route path="/accesories" element={} />
            
