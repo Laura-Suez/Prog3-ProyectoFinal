@@ -6,10 +6,7 @@ import FaqAccordion from "../FAQ/FaqAccordion";
 const ContactUs = () => {
   return (
     <>
-      
-        <ContacForm />
-        <FaqAccordion />
-      
+      <ContacForm />
     </>
   );
 };
