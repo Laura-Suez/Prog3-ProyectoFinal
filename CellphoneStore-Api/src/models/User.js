@@ -1,37 +1,33 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../db.js";
 
-export const Product = sequelize.define("product", {
+export const User = sequelize.define("user", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  name: {
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+    validate: { isEmail: true } 
+  },
+  password: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  image: {
-    type: DataTypes.STRING,
+  role: {
+    type: DataTypes.ENUM('super-admin', 'admin', 'user'), 
+    defaultValue: 'user',
     allowNull: false,
-  },
-  category: {
-    type: DataTypes.ENUM('Accesorios', 'Celulares'), 
-    allowNull: false,
-  },
-  price: {
-    type: DataTypes.DECIMAL(10, 2),
-    allowNull: false,
-  },
-  description: {
-    type: DataTypes.TEXT,
-    allowNull: true,
   },
   active: {
     type: DataTypes.BOOLEAN,
     defaultValue: true
-  },
+  }
+  ,
   },
   {
-  timestamps: false // esta bien esto (filtrar pedidos por fecha)
-}); 
+  timestamps: false 
+});

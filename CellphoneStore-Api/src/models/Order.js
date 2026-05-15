@@ -11,13 +11,8 @@ export const Order = sequelize.define("order", {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
   },
-  status: {
-  type: DataTypes.ENUM('pendiente', 'pagado', 'enviado', 'cancelado'), // cambiar a bool o sacar status ?
-  defaultValue: 'carrito',
-  allowNull: false
-  },
   },
   {
-  timestamps: true // Redundante ?? 
+  timestamps: true 
   }
 );

@@ -4,7 +4,7 @@ import { Order } from './Order.js';
 
 // --- DEFINICIÓN DE ASOCIACIONES ---
 
-// index.js o models.js ???
+
 
 // 1. Relación Uno a Muchos (User - Order)
 // Un usuario puede realizar muchos pedidos.

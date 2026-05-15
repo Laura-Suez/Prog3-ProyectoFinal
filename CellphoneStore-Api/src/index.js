@@ -2,14 +2,13 @@ import express from "express";
 import { PORT } from "./config.js";
 import productsRoutes from "./routes/productsRoutes.js";
 import { sequelize } from "./db.js";
-import models from "./models/models.js"
-// importar las 3 tablas ??? 
-// impoportar {user product order} from ... o impo
-// import "./models/models.js"
+import { User, Product, Order } from "./models/models.js"
 
 const app = express();
 
+
 try {
+    app.use(express.json());
     app.listen(PORT);
     app.use(productsRoutes);
 
