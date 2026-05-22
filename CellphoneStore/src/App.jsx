@@ -33,7 +33,7 @@ function App() {
       category: "Accessories",
       price: 105000,
       description:
-        "Auriculares inalámbricos con cancelación activa de ruido, sonido de alta calidad y mayor autonomía para uso diario.",
+        "Auriculares inalámbricos con cancelación activa de ruido y sonido de alta calidad",
     },
     {
       id: 4,
@@ -167,7 +167,7 @@ function App() {
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<Navigate to="/home" replace />} />
-            <Route path="/home" element={<Home />} />
+            <Route path="/home" element={<Home productList={productList} />} />
             <Route
               path="/products"
               element={<Products productList={productList} />}

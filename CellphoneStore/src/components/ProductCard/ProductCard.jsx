@@ -3,41 +3,21 @@ import Card from "react-bootstrap/Card";
 
 function ProductCard({ product }) {
   return (
-    <Card
-      style={{
-        width: "18rem",
-        height: "100%",
-      }}
-      className="shadow-sm border-0"
-    >
+    <Card className="product-card shadow-sm border-0">
       <Card.Img
         variant="top"
         src={product.image}
-        style={{
-          height: "250px",
-          objectFit: "contain",
-          padding: "10px",
-        }}
+        className="product-card-img"
       />
 
       <Card.Body className="d-flex flex-column">
         <Card.Title>{product.name}</Card.Title>
 
-        <Card.Text className="text-muted">
-          {product.category}
-        </Card.Text>
+        <Card.Text>{product.description}</Card.Text>
 
-        <Card.Text>
-          {product.description}
-        </Card.Text>
+        <h4 className="mt-auto">${product.price.toLocaleString()}</h4>
 
-        <h4 className="mt-auto">
-          ${product.price.toLocaleString()}
-        </h4>
-
-        <Button variant="dark">
-          Comprar
-        </Button>
+        <Button variant="dark">Comprar</Button>
       </Card.Body>
     </Card>
   );

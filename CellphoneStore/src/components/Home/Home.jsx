@@ -1,12 +1,13 @@
 import React from "react";
-import Layout from "../Layout/Layout";
+import Carousels from "../Carousel/Carousel";
+import ProductCarousel from "../ProductCarousel/ProductCarousel";
 
-const Home = () => {
+const Home = ({ productList }) => {
   return (
     <>
-      
-        <div>Inicio</div>;
-      
+      <Carousels />
+
+      <ProductCarousel products={productList} />
     </>
   );
 };
