@@ -64,6 +64,19 @@ body {
   border-bottom: 2px solid var(--my-primary) !important;
 }
 
+/* CARD */
+
+.product-card {
+  width: 14rem;
+  height: 100%;
+}
+
+.product-card-img {
+  height: 200px;
+  object-fit: contain;
+  padding: 10px;
+}
+
 /* 4. FOOTER */
 footer {
   border-top: 1px solid #eeeeee;
