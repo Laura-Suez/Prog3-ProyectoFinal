@@ -112,3 +112,61 @@ footer a:hover {
   font-size: 0.8rem;
   border-top: 1px solid #eeeeee;
 }
+
+.contact-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0; 
+  border-radius: 12px;       
+  padding: 2.5rem;         
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); /* Sombra suave */
+}
+
+.contact-label {
+  font-size: 0.75rem;       
+  font-weight: 700;        
+  text-transform: uppercase; 
+  color: #4a5568;           
+  letter-spacing: 0.05em;  
+  margin-bottom: 0.5rem;
+}
+
+.contact-input {
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  color: #1a202c;
+  background-color: #f8fafc; 
+  transition: all 0.2s ease-in-out;
+}
+
+.contact-input:focus {
+  background-color: #ffffff;
+  border-color: #1a202c; 
+  box-shadow: none;      
+  outline: none;
+}
+
+
+.btn-contact-submit {
+  background-color: #111418; 
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 1rem;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.btn-contact-submit:hover {
+  background-color: #2d3748; 
+  color: #ffffff;
+}
+
+.contact-footer-text {
+  font-size: 0.8rem;
+  color: #718096;
+}
