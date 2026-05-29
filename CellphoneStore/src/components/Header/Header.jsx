@@ -29,12 +29,10 @@ const Header = () => {
             </Nav.Link>
 
             <Nav.Link href="/cart" className="text-dark p-0 position-relative">
-              <MdOutlineShoppingCart size={22} />
+              <MdOutlineShoppingCart size={24} />
               <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style={{ fontSize: '0.65rem' }}>
-                0
               </span>
             </Nav.Link>
-          {/* Iconos de la derecha (Usuario y Carrito) */}
         </Navbar.Collapse>
       </Container>
     </Navbar>
