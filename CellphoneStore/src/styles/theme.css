@@ -65,10 +65,28 @@ body {
 }
 
 /* CARD */
-
 .product-card {
   width: 14rem;
   height: 100%;
+  cursor: pointer;
+
+  transition:
+    transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+    box-shadow 0.3s ease;
+  will-change: transform, box-shadow;
+}
+
+.product-card:hover {
+  transform: translateY(-8px) scale(1.03);
+
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.15),
+    0 10px 10px rgba(0, 0, 0, 0.12) !important;
+}
+
+.product-card:active {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15) !important;
 }
 
 .product-card-img {
@@ -115,18 +133,20 @@ footer a:hover {
 
 .contact-card {
   background-color: #ffffff;
-  border: 1px solid #e2e8f0; 
-  border-radius: 12px;       
-  padding: 2.5rem;         
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); /* Sombra suave */
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 2.5rem;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px -1px rgba(0, 0, 0, 0.03); /* Sombra suave */
 }
 
 .contact-label {
-  font-size: 0.75rem;       
-  font-weight: 700;        
-  text-transform: uppercase; 
-  color: #4a5568;           
-  letter-spacing: 0.05em;  
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #4a5568;
+  letter-spacing: 0.05em;
   margin-bottom: 0.5rem;
 }
 
@@ -136,20 +156,19 @@ footer a:hover {
   padding: 0.75rem 1rem;
   font-size: 0.95rem;
   color: #1a202c;
-  background-color: #f8fafc; 
+  background-color: #f8fafc;
   transition: all 0.2s ease-in-out;
 }
 
 .contact-input:focus {
   background-color: #ffffff;
-  border-color: #1a202c; 
-  box-shadow: none;      
+  border-color: #1a202c;
+  box-shadow: none;
   outline: none;
 }
 
-
 .btn-contact-submit {
-  background-color: #111418; 
+  background-color: #111418;
   color: #ffffff;
   font-weight: 700;
   font-size: 0.85rem;
@@ -162,11 +181,17 @@ footer a:hover {
 }
 
 .btn-contact-submit:hover {
-  background-color: #2d3748; 
+  background-color: #2d3748;
   color: #ffffff;
 }
 
 .contact-footer-text {
   font-size: 0.8rem;
   color: #718096;
+}
+
+.carousel-inner {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-top: -15px;
 }
