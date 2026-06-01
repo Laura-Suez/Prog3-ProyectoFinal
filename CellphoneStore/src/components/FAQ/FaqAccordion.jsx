@@ -17,8 +17,8 @@ const FaqAccordion = () => {
         <Accordion.Item eventKey="1">
           <Accordion.Header>¿Qué métodos de pago aceptan? </Accordion.Header>
           <Accordion.Body>
-            Aceptamos efectivo, transferencias bancarias y
-            billeteras virtuales..
+            Aceptamos efectivo, transferencias bancarias y billeteras
+            virtuales..
           </Accordion.Body>
         </Accordion.Item>
         <Accordion.Item eventKey="2">
@@ -40,7 +40,7 @@ const FaqAccordion = () => {
             ¿Cómo hago el seguimiento de mi pedido?
           </Accordion.Header>
           <Accordion.Body>
-            veras el pedido de seguimiento en tu orden de compra
+            Una vez realizada la compra, verás tu número de seguimiento.
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>

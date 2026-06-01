@@ -5,22 +5,22 @@ function Carousels() {
     <Carousel>
       <Carousel.Item>
         <img
-          className="d-block w-100"
-          src="./public/carousel/Banner1.jpg"
+          className="d./-block w-100"
+          src="/carousel/Banner1.jpg"
           alt="slide"
         />
       </Carousel.Item>
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="./public/carousel/Banner2.webp"
+          src="/carousel/Banner2.webp"
           alt="slide"
         />
       </Carousel.Item>
       <Carousel.Item>
-         <img
+        <img
           className="d-block w-100"
-          src="./public/carousel/Banner3.webp"
+          src="/carousel/Banner3.webp"
           alt="slide"
         />
       </Carousel.Item>
