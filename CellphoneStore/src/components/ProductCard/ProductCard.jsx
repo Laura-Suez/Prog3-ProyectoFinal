@@ -3,7 +3,7 @@ import Card from "react-bootstrap/Card";
 
 function ProductCard({ product }) {
   return (
-    <Card className="product-card shadow-sm border-0">
+    <Card className="product-card shadow-sm border-0 h-100">
       <Card.Img
         variant="top"
         src={product.image}
@@ -11,13 +11,20 @@ function ProductCard({ product }) {
       />
 
       <Card.Body className="d-flex flex-column">
-        <Card.Title>{product.name}</Card.Title>
+        {/* Forzamos una altura mínima al título para que si ocupa 2 renglones no desfase todo */}
+        <Card.Title style={{ minHeight: "50px" }}>{product.name}</Card.Title>
 
-        <Card.Text>{product.description}</Card.Text>
+        {/* FIJAMOS LA ALTURA DE LA DESCRIPCIÓN:
+          - height: "75px" (ajusta este número según tus renglones)
+          - overflow: "hidden" (evita que el texto se desborde)
+        */}
+        <Card.Text style={{ height: "75px", overflow: "hidden" }}>
+          {product.description}
+        </Card.Text>
 
         <h4 className="mt-auto">${product.price.toLocaleString()}</h4>
 
-        <Button variant="dark">Comprar</Button>
+        <Button variant="dark">Añadir al Carrito</Button>
       </Card.Body>
     </Card>
   );
