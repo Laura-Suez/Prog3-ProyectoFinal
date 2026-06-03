@@ -13,7 +13,7 @@ function App() {
     fetch("http://localhost:3000/products", {})
       .then((res) => {
         if (!res.ok) {
-          throw new Error("No se pudieron cargar los libros");
+          throw new Error("No se pudieron cargar los productos");
         }
 
         return res.json();
@@ -21,7 +21,7 @@ function App() {
       .then((data) => setProducts([...data]))
       .catch((error) => {
         console.log(error);
-        errorToast("No se pudieron cargar los libros");
+        errorToast("No se pudieron cargar los productos");
       });
   }, []);
 
