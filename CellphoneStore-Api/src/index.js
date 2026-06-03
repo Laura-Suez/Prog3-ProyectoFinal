@@ -1,35 +1,20 @@
 import express from "express";
+import cors from "cors";
 import { PORT } from "./config.js";
 import productsRoutes from "./routes/productsRoutes.js";
 import { sequelize } from "./db.js";
-import { User, Product, Order } from "./models/models.js"
+import { User, Product, Order } from "./models/models.js";
 
 const app = express();
 
-
 try {
-    app.use(express.json());
-    app.listen(PORT);
-    app.use(productsRoutes);
+  app.use(express.json());
+  app.use(cors());
+  app.use(productsRoutes);
+  app.listen(PORT);
+  await sequelize.sync();
 
-
-    await sequelize.sync();
-    
-    console.log(`Server listening on port ${PORT}`);
-
-
+  console.log(`Server listening on port ${PORT}`);
 } catch (error) {
-    console.log(`There was an error on inizialitation`);
+  console.log(`There was an error on inizialitation`);
 }
-
-    
-    
-
-
-
-    
-
-
-
-
-
