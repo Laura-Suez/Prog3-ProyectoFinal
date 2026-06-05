@@ -1,5 +1,3 @@
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 import { successToast, errorToast } from "../Notification/Notification";
 import emailjs from "@emailjs/browser";
@@ -62,7 +60,7 @@ const ContacForm = () => {
 
   return (
   <div className="container d-flex flex-column align-items-center mt-5">
-    <ToastContainer />
+    
     
     <h2 className="fw-bold mb-2 text-center" style={{ color: "#111418", fontSize: "2.2rem" }}>
       Ponte en contacto con nuestros expertos
