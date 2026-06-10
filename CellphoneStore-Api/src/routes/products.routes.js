@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { Product } from "../models/Product.js";
 import {
   getAllProducts,
   getProductById,
@@ -7,7 +6,7 @@ import {
   updateProduct,
   deleteProduct,
 } from "../services/productsServices.js";
-import { verifyToken } from "../services/authService.js";
+import { verifyToken } from "../services/authServices.js";
 
 const router = Router();
 
