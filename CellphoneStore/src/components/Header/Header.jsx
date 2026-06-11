@@ -19,8 +19,11 @@ const Header = () => {
             {/* mx-auto para centrar los links */}
             <Nav.Link href="/home">Inicio</Nav.Link>
             <Nav.Link href="/products">Productos</Nav.Link>
+            <Nav.Link href="/orders">Ordenes</Nav.Link>
+            <Nav.Link href="/users">Usuarios</Nav.Link>
+            <Nav.Link href="/inventory">Inventario</Nav.Link>
             <Nav.Link href="/contact-Us">Contacto</Nav.Link>
-            <Nav.Link href="/faq">Preguntas frecuentes</Nav.Link>
+            <Nav.Link href="/faq">Preguntas Frecuentes</Nav.Link>
           </Nav>
 
             <Nav.Link href="/login" className="text-dark d-flex align-items-center gap-1 p-0">

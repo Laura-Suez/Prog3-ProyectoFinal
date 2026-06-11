@@ -8,7 +8,8 @@ import Products from "./components/Products/Products";
 import { errorToast } from "./components/Notification/Notification";
 import { ToastContainer } from "react-toastify";
 import Login from "./components/Auth/Login";
-import Register from "./components/Auth/Register"; 
+import Register from "./components/Auth/Register";
+import Inventory from "./components/Products/Inventory";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -31,7 +32,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <ToastContainer /> 
+        <ToastContainer />
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<Navigate to="/home" replace />} />
@@ -44,6 +45,9 @@ function App() {
             <Route path="/faq" element={<FaqAccordion />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            {/* <Route path="/orders" element={< />} />
+            <Route path="/users" element={</>} /> */}
+            <Route path="/inventory" element={<Inventory />} />
             {/* <Route path="*" element={} /> */}
           </Route>
         </Routes>
