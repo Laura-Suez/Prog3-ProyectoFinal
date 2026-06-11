@@ -1,5 +1,6 @@
 import { sequelize } from "../db.js";
 import { seedProducts } from "./seedProducts.js";
+import { seedSuperAdmin } from "./seedSuperAdmin.js";
 
 const runSeeders = async () => {
   try {
@@ -7,6 +8,7 @@ const runSeeders = async () => {
     console.log("Conexión establecida. Corriendo seeders...\n");
 
     await seedProducts();
+    await seedSuperAdmin();
 
     console.log("\n Todos los seeders corrieron exitosamente.");
     process.exit(0);
