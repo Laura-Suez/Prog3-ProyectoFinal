@@ -32,24 +32,36 @@ export const updateOrder = async (req, res) => {
       return res.status(400).json({ message: "El total debe ser mayor a 0" });
 
     const order = await Order.findByPk(id);
-
     if (!order) return res.status(404).json({ message: "Orden no encontrada" });
 
-    await order.update({ total });
+    const isOwner = order.userId === req.user.id;
+    const isAdmin = ["admin", "super-admin"].includes(req.user.role);
 
+    if (!isOwner && !isAdmin)
+      return res
+        .status(403)
+        .json({ message: "No tenés permiso sobre esta orden" });
+
+    await order.update({ total });
     res.json(order);
   } catch (error) {
     res.status(500).json({ message: "Error al actualizar la orden" });
   }
 };
-
 export const deleteOrder = async (req, res) => {
   try {
     const { id } = req.params;
 
     const order = await Order.findByPk(id);
-
     if (!order) return res.status(404).json({ message: "Orden no encontrada" });
+
+    const isOwner = order.userId === req.user.id;
+    const isAdmin = ["admin", "super-admin"].includes(req.user.role);
+
+    if (!isOwner && !isAdmin)
+      return res
+        .status(403)
+        .json({ message: "No tenés permiso sobre esta orden" });
 
     await order.destroy();
 

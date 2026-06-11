@@ -23,6 +23,17 @@ export const verifyToken = (req, res, next) => {
   }
 };
 
+export const authorizeRoles = (...allowedRoles) => {
+  return (req, res, next) => {
+    if (!req.user || !allowedRoles.includes(req.user.role)) {
+      return res
+        .status(403)
+        .json({ message: "No tenés permisos para realizar esta acción" });
+    }
+    next();
+  };
+};
+
 // --- SERVICIOS ---
 
 export const registerUser = async (req, res) => {
@@ -71,9 +82,11 @@ export const loginUser = async (req, res) => {
   if (!comparison)
     return res.status(401).json({ message: "Email y/o contraseña incorrecta" });
 
-  const token = jwt.sign({ id: user.id, email: user.email }, secretKey, {
-    expiresIn: "1h",
-  });
+  const token = jwt.sign(
+    { id: user.id, email: user.email, role: user.role },
+    secretKey,
+    { expiresIn: "1h" },
+  );
 
   return res.json(token);
 };
