@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import { Button, Card, Col, Form, FormGroup, Row } from "react-bootstrap";
 import { errorToast, successToast } from "../Notification/Notification";
 import { useNavigate } from "react-router";
@@ -6,7 +6,7 @@ import { AuthenticationContext } from "../Services/Auth/auth.context";
 
 const Login = () => {
   const navigate = useNavigate();
-
+  const {handleUserLogin} = useContext(AuthenticationContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({ email: false, password: false });
@@ -67,7 +67,7 @@ const Login = () => {
       }
       const token = await response.json();
 
-      localStorage.setItem("token", token);
+      handleUserLogin(token);
 
       setErrors({ email: false, password: false });
 
