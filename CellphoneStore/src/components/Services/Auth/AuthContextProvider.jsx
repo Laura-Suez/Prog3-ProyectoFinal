@@ -2,16 +2,14 @@ import { useState } from "react";
 import { AuthenticationContext } from "./auth.context";
 import { decodeToken } from "../../Utils/auth";
 
-
 const tokenValue = "authToken";
 const storedToken = localStorage.getItem(tokenValue);
 const initialUser = storedToken ? decodeToken(storedToken) : null;
 
-
 export const AuthenticationContextProvider = ({ children }) => {
     const [token, setToken] = useState(storedToken);
     const [user, setUser] = useState(initialUser);
-    const isAuthenticated = (token) ? true : false; 
+    const isAuthenticated = !!user; 
 
     const handleUserLogin = (token) => {
         localStorage.setItem(tokenValue, token);
