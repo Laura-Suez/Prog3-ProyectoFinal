@@ -29,7 +29,7 @@ const Header = () => {
             <Nav.Link href="/orders">Ordenes</Nav.Link>
             )}
 
-            {isAuthenticated && user?.role === "super-admin" && (
+            {isAuthenticated && user?.role !== "user" && (
             <Nav.Link href="/users">Usuarios</Nav.Link>
             )}
 

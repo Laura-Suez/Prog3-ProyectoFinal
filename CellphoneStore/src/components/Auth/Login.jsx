@@ -36,13 +36,13 @@ const Login = () => {
 
     if (
       !password.length ||
-      password.length < 7 ||
+      password.length < 8 ||
       !/[A-Z]/.test(password) ||
       !/\d/.test(password)
     ) {
       setErrors({ email: false, password: true });
       errorToast(
-        "Debes completar la contraseña, mínimo 7 caracteres, una mayúscula y un número.",
+        "Debes completar la contraseña, mínimo 8 caracteres, una mayúscula y un número.",
       );
       passwordRef.current.focus();
       return;

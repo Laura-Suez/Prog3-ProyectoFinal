@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Table from "react-bootstrap/Table";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { AuthenticationContext } from "../Services/Auth/auth.context";
+import { errorToast, successToast } from "../Notification/Notification";
 
 const initialProductForm = {
   name: "",
@@ -16,15 +18,14 @@ const initialProductForm = {
 const CATEGORIES = ["Cellphones", "Accesories"];
 
 const Inventory = ({ products = [], setProducts }) => {
+  const { token } = useContext(AuthenticationContext);
   const [productForm, setProductForm] = useState(initialProductForm);
   const [editingProductId, setEditingProductId] = useState(null);
-  const [productError, setProductError] = useState("");
   const [savingProduct, setSavingProduct] = useState(false);
 
   const resetForm = () => {
     setProductForm(initialProductForm);
     setEditingProductId(null);
-    setProductError("");
   };
 
   const handleInputChange = (event) => {
@@ -46,12 +47,10 @@ const Inventory = ({ products = [], setProducts }) => {
       active: Boolean(product.active),
       stock: product.stock?.toString() || "",
     });
-    setProductError("");
   };
 
   const handleSaveProduct = async (event) => {
     event.preventDefault();
-    setProductError("");
 
     if (
       !productForm.name ||
@@ -60,15 +59,12 @@ const Inventory = ({ products = [], setProducts }) => {
       !productForm.price ||
       !productForm.stock
     ) {
-      setProductError(
-        "Nombre, imagen, categoría, precio y stock son obligatorios.",
-      );
+      errorToast("Nombre, imagen, categoría, precio y stock son obligatorios.");
       return;
     }
 
-    const token = localStorage.getItem("token");
     if (!token) {
-      setProductError("Necesitás iniciar sesión como administrador.");
+      errorToast("Necesitás iniciar sesión como administrador.");
       return;
     }
 
@@ -113,16 +109,67 @@ const Inventory = ({ products = [], setProducts }) => {
             item.id === editingProductId ? updatedProduct : item,
           ),
         );
+        successToast("Producto actualizado correctamente.");
       } else {
         const newProduct = await response.json();
         setProducts((current) => [...current, newProduct]);
+        successToast("Producto creado correctamente.");
       }
 
       resetForm();
     } catch (err) {
-      setProductError(err.message);
+      errorToast(err.message);
     } finally {
       setSavingProduct(false);
+    }
+  };
+
+  const handleToggleActive = async (product) => {
+    if (!token) {
+      errorToast("Necesitás iniciar sesión como administrador.");
+      return;
+    }
+
+    const nextActive = !product.active;
+    const action = nextActive ? "reactivar" : "dar de baja";
+
+    if (!window.confirm(`¿Querés ${action} el producto "${product.name}"?`))
+      return;
+
+    try {
+      // Baja lógica: actualizamos el flag `active` en vez de borrar el producto.
+      const response = await fetch(
+        `http://localhost:3000/products/${product.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ ...product, active: nextActive }),
+        },
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(
+          errorData.message || "No se pudo actualizar el producto.",
+        );
+      }
+
+      setProducts((current) =>
+        current.map((item) =>
+          item.id === product.id ? { ...item, active: nextActive } : item,
+        ),
+      );
+      if (editingProductId === product.id) resetForm();
+      successToast(
+        nextActive
+          ? "Producto reactivado correctamente."
+          : "Producto dado de baja correctamente.",
+      );
+    } catch (err) {
+      errorToast(err.message);
     }
   };
 
@@ -132,8 +179,6 @@ const Inventory = ({ products = [], setProducts }) => {
       <p className="text-secondary mb-4">
         Aquí puedes gestionar tus productos.
       </p>
-
-      {productError && <div className="alert alert-danger">{productError}</div>}
 
       <section className="mb-5">
         <h2>{editingProductId ? "Editar producto" : "Agregar producto"}</h2>
@@ -253,7 +298,7 @@ const Inventory = ({ products = [], setProducts }) => {
               <th>Precio</th>
               <th>Stock</th>
               <th>Activo</th>
-              <th>Editar</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -265,13 +310,20 @@ const Inventory = ({ products = [], setProducts }) => {
                 <td>${Number(product.price).toLocaleString()}</td>
                 <td>{product.stock}</td>
                 <td>{product.active ? "Sí" : "No"}</td>
-                <td>
+                <td className="d-flex gap-2">
                   <Button
                     size="sm"
                     variant="outline-primary"
                     onClick={() => handleEditProduct(product)}
                   >
                     Editar
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant={product.active ? "outline-danger" : "outline-success"}
+                    onClick={() => handleToggleActive(product)}
+                  >
+                    {product.active ? "Dar de baja" : "Reactivar"}
                   </Button>
                 </td>
               </tr>
