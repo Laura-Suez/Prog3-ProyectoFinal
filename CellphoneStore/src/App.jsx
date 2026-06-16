@@ -12,6 +12,8 @@ import Register from "./components/Auth/Register";
 import Inventory from "./components/Products/Inventory";
 import Users from "./components/Users/Users";
 import { AuthenticationContextProvider } from "./components/Services/Auth/AuthContextProvider";
+import { CartProvider } from "./components/Cart/ProviderCart";
+import CheckoutConfirmation from "./components/Cart/CheckoutConfirmation";
 import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
 import NotFound from "./components/NotFound/NotFound";
 
@@ -40,44 +42,49 @@ function App() {
   return (
     <>
       <AuthenticationContextProvider>
-        <BrowserRouter>
-          <ToastContainer />
-          <Routes>
-            <Route element={<Layout />}>
-              <Route path="/" element={<Navigate to="/home" replace />} />
-              <Route
-                path="/home"
-                element={<Home productList={activeProducts} />}
-              />
-              <Route
-                path="/products"
-                element={<Products productList={activeProducts} />}
-              />
-              <Route path="/contact-Us" element={<ContactUs />} />
-              <Route path="/faq" element={<FaqAccordion />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              {/* <Route path="/orders" element={< />} /> */}
-              <Route
-                path="/users"
-                element={
-                  <ProtectedRoute allowedRoles={["admin", "super-admin"]}>
-                    <Users />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/inventory"
-                element={
-                  <ProtectedRoute allowedRoles={["admin", "super-admin"]}>
-                    <Inventory products={products} setProducts={setProducts} />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path="*" element={<NotFound />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
+        <CartProvider>
+          <BrowserRouter>
+            <ToastContainer />
+            <Routes>
+              <Route element={<Layout />}>
+                <Route path="/" element={<Navigate to="/home" replace />} />
+                <Route
+                  path="/home"
+                  element={<Home productList={activeProducts} />}
+                />
+                <Route
+                  path="/products"
+                  element={<Products productList={activeProducts} />}
+                />
+                <Route path="/contact-Us" element={<ContactUs />} />
+                <Route path="/faq" element={<FaqAccordion />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                {/* <Route path="/orders" element={< />} /> */}
+                <Route
+                  path="/users"
+                  element={
+                    <ProtectedRoute allowedRoles={["admin", "super-admin"]}>
+                      <Users />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/inventory"
+                  element={
+                    <ProtectedRoute allowedRoles={["admin", "super-admin"]}>
+                      <Inventory
+                        products={products}
+                        setProducts={setProducts}
+                      />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path="*" element={<NotFound />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </CartProvider>
       </AuthenticationContextProvider>
     </>
   );
