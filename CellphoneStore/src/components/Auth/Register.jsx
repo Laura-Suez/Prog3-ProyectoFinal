@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router";
 import { useState, useRef } from "react";
-import { Button, Card, Col, Form, FormGroup, Row } from "react-bootstrap";
+import { Card, Form, Button } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 import { errorToast, successToast } from "../Notification/Notification";
 
 const Register = () => {
@@ -35,13 +37,13 @@ const Register = () => {
 
     if (
       !password.length ||
-      password.length < 7 ||
+      password.length < 8 ||
       !/[A-Z]/.test(password) ||
       !/\d/.test(password)
     ) {
       setErrors({ email: false, password: true });
       errorToast(
-        "Debes completar la contraseña, mínimo 7 caracteres, una mayúscula y un número.",
+        "Debes completar la contraseña, mínimo 8 caracteres, una mayúscula y un número.",
       );
       passwordRef.current.focus();
       return;
@@ -75,53 +77,138 @@ const Register = () => {
   };
 
   return (
-    <Card className="mt-5 mx-3 p-3 px-5 shadow">
-      <Card.Body>
-        <Form onSubmit={handleSubmit} noValidate>
-          <FormGroup className="mb-4">
-            <Form.Control
-              type="email"
-              placeholder="Ingresar email"
-              onChange={handleEmailChange}
-              ref={emailRef}
-              value={email}
-              className={errors.email ? "border border-danger" : ""}
-            />
-            {errors.email && (
-              <p className="text-danger mt-1 mb-0">
-                Debes ingresar un email válido para registrarte.
-              </p>
-            )}
-          </FormGroup>
+    <div
+      className="container d-flex justify-content-center align-items-center"
+      style={{ minHeight: "100vh" }}
+    >
+      <Card
+        className="shadow border-0"
+        style={{
+          width: "100%",
+          maxWidth: "600px",
+          borderRadius: "20px",
+          backgroundColor: "#f8f9fb",
+        }}
+      >
+        <Card.Body className="p-5">
+          <div className="text-center mb-5">
+            <h2
+              className="fw-bold"
+              style={{
+                color: "#111418",
+                fontSize: "2.2rem",
+              }}
+            >
+              Crear Cuenta
+            </h2>
 
-          <FormGroup className="mb-4">
-            <Form.Control
-              type="password"
-              placeholder="Ingresar contraseña"
-              onChange={handlePasswordChange}
-              ref={passwordRef}
-              value={password}
-              className={errors.password ? "border border-danger" : ""}
-            />
-            {errors.password && (
-              <p className="text-danger mt-1 mb-0">
-                Debes completar la contraseña, mínimo 7 caracteres, una
-                mayúscula y un número.
-              </p>
-            )}
-          </FormGroup>
+            <p className="text-muted">
+              Regístrate para comenzar a gestionar tus pedidos y productos.
+            </p>
+          </div>
 
-          <Row>
-            <Col />
-            <Col md={6} className="d-flex justify-content-end">
-              <Button variant="secondary" type="submit">
-                Registrarse
-              </Button>
-            </Col>
-          </Row>
-        </Form>
-      </Card.Body>
-    </Card>
+          <Form onSubmit={handleSubmit} noValidate>
+            <Form.Group className="mb-4">
+              <Form.Label
+                className="fw-bold text-uppercase"
+                style={{
+                  letterSpacing: "1px",
+                  fontSize: "0.9rem",
+                }}
+              >
+                Email
+              </Form.Label>
+
+              <Form.Control
+                type="email"
+                placeholder="correo@ejemplo.com"
+                value={email}
+                onChange={handleEmailChange}
+                ref={emailRef}
+                className={errors.email ? "border border-danger" : ""}
+                style={{
+                  height: "55px",
+                  borderRadius: "8px",
+                }}
+              />
+
+              {errors.email && (
+                <p className="text-danger mt-2 mb-0">
+                  Debes ingresar un email válido.
+                </p>
+              )}
+            </Form.Group>
+
+            <Form.Group className="mb-4">
+              <Form.Label
+                className="fw-bold text-uppercase"
+                style={{
+                  letterSpacing: "1px",
+                  fontSize: "0.9rem",
+                }}
+              >
+                Contraseña
+              </Form.Label>
+
+              <Form.Control
+                type="password"
+                placeholder="Ingresa tu contraseña"
+                value={password}
+                onChange={handlePasswordChange}
+                ref={passwordRef}
+                className={errors.password ? "border border-danger" : ""}
+                style={{
+                  height: "55px",
+                  borderRadius: "8px",
+                }}
+              />
+
+              {errors.password && (
+                <p className="text-danger mt-2 mb-0">
+                  Debes completar la contraseña con al menos 7 caracteres, una
+                  mayúscula y un número.
+                </p>
+              )}
+            </Form.Group>
+
+            <Button
+              type="submit"
+              className="w-100 mb-3"
+              style={{
+                height: "60px",
+                background: "linear-gradient(90deg,#030712,#0f172a,#030712)",
+                border: "none",
+                borderRadius: "8px",
+                fontWeight: "700",
+                letterSpacing: "1px",
+              }}
+            >
+              REGISTRARSE →
+            </Button>
+
+            <div
+              className="text-center mt-4 text-muted"
+              style={{ paddingBottom: "10px" }}
+            >
+              ¿Ya tienes una cuenta?
+            </div>
+
+            <Button
+              variant="outline-secondary"
+              className="w-100"
+              type="button"
+              onClick={() => navigate("/login")}
+              style={{
+                height: "55px",
+                borderRadius: "8px",
+              }}
+            >
+              Iniciar sesión
+            </Button>
+          </Form>
+        </Card.Body>
+      </Card>
+    </div>
   );
 };
 

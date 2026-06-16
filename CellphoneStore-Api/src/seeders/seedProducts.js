@@ -10,7 +10,7 @@ export const seedProducts = async () => {
       price: 38000,
       description: "Auriculares inalámbricos con sonido nítido y buena autonomía.",
       active: true,
-      stock: 0,
+      stock: 6,
     },
     {
       id: 2,
@@ -20,7 +20,7 @@ export const seedProducts = async () => {
       price: 45000,
       description: "Versión mejorada con cancelación de ruido y diseño elegante.",
       active: true,
-      stock: 0,
+      stock: 4,
     },
     {
       id: 3,
@@ -31,7 +31,7 @@ export const seedProducts = async () => {
       description:
         "Auriculares inalámbricos con cancelación activa de ruido, sonido de alta calidad y mayor autonomía para uso diario.",
       active: true,
-      stock: 0,
+      stock: 3,
     },
     {
       id: 4,
@@ -41,7 +41,7 @@ export const seedProducts = async () => {
       price: 45000,
       description: "Batería externa de alta capacidad para cargar tus dispositivos.",
       active: true,
-      stock: 0,
+      stock: 8,
     },
     {
       id: 5,
@@ -51,7 +51,7 @@ export const seedProducts = async () => {
       price: 43000,
       description: "Cargador rápido de 67W compatible con múltiples dispositivos.",
       active: true,
-      stock: 0,
+      stock: 10,
     },
     {
       id: 6,
@@ -61,7 +61,7 @@ export const seedProducts = async () => {
       price: 70500,
       description: "Pulsera inteligente con monitoreo de salud y actividad.",
       active: true,
-      stock: 0,
+      stock: 6,
     },
     {
       id: 7,
@@ -71,7 +71,7 @@ export const seedProducts = async () => {
       price: 81000,
       description: "Smartwatch liviano con funciones deportivas y notificaciones.",
       active: true,
-      stock: 0,
+      stock: 5,
     },
     {
       id: 8,
@@ -81,7 +81,7 @@ export const seedProducts = async () => {
       price: 58000,
       description: "Reloj inteligente con diseño moderno y múltiples sensores.",
       active: true,
-      stock: 0,
+      stock: 4,
     },
     {
       id: 9,
@@ -91,7 +91,7 @@ export const seedProducts = async () => {
       price: 250000,
       description: "Smartphone equilibrado con buena batería y rendimiento.",
       active: true,
-      stock: 0,
+      stock: 9,
     },
     {
       id: 10,
@@ -101,7 +101,7 @@ export const seedProducts = async () => {
       price: 361000,
       description: "Teléfono económico con gran rendimiento para el día a día.",
       active: true,
-      stock: 0,
+      stock: 7,
     },
     {
       id: 11,
@@ -111,7 +111,7 @@ export const seedProducts = async () => {
       price: 400000,
       description: "Gama media potente con excelente cámara.",
       active: true,
-      stock: 0,
+      stock: 6,
     },
     {
       id: 12,
@@ -121,7 +121,7 @@ export const seedProducts = async () => {
       price: 1022000,
       description: "Alto rendimiento, cámara avanzada y ecosistema Apple.",
       active: true,
-      stock: 0,
+      stock: 4,
     },
     {
       id: 13,
@@ -131,7 +131,7 @@ export const seedProducts = async () => {
       price: 1800000,
       description: "Nueva generación con mejoras en rendimiento y batería.",
       active: true,
-      stock: 0,
+      stock: 5,
     },
     {
       id: 14,
@@ -141,7 +141,7 @@ export const seedProducts = async () => {
       price: 2100000,
       description: "Última tecnología con diseño renovado y máxima potencia.",
       active: true,
-      stock: 0,
+      stock: 9,
     },
     {
       id: 15,
@@ -151,10 +151,10 @@ export const seedProducts = async () => {
       price: 615000,
       description: "Excelente opción de gama media con buen desempeño.",
       active: true,
-      stock: 0,
+      stock: 7,
     },
-    
-  ]);
+
+  ], { ignoreDuplicates: true });
 
   console.log("Productos insertados correctamente.");
 };

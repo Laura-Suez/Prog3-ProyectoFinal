@@ -8,7 +8,9 @@ import Products from "./components/Products/Products";
 import { errorToast } from "./components/Notification/Notification";
 import { ToastContainer } from "react-toastify";
 import Login from "./components/Auth/Login";
-import Register from "./components/Auth/Register"; 
+import Register from "./components/Auth/Register";
+import Inventory from "./components/Products/Inventory";
+import { AuthenticationContextProvider } from "./components/Services/Auth/AuthContextProvider";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -30,24 +32,32 @@ function App() {
 
   return (
     <>
-      <BrowserRouter>
-        <ToastContainer /> 
-        <Routes>
-          <Route element={<Layout />}>
-            <Route path="/" element={<Navigate to="/home" replace />} />
-            <Route path="/home" element={<Home productList={products} />} />
+      <AuthenticationContextProvider>
+        <BrowserRouter>
+          <ToastContainer />
+          <Routes>
+            <Route element={<Layout />}>
+              <Route path="/" element={<Navigate to="/home" replace />} />
+              <Route path="/home" element={<Home productList={products} />} />
+              <Route
+                path="/products"
+                element={<Products productList={products} />}
+              />
+              <Route path="/contact-Us" element={<ContactUs />} />
+              <Route path="/faq" element={<FaqAccordion />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              {/* <Route path="/orders" element={< />} />
+            <Route path="/users" element={</>} /> */}
             <Route
-              path="/products"
-              element={<Products productList={products} />}
+              path="/inventory"
+              element={<Inventory products={products} setProducts={setProducts} />}
             />
-            <Route path="/contact-Us" element={<ContactUs />} />
-            <Route path="/faq" element={<FaqAccordion />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
             {/* <Route path="*" element={} /> */}
-          </Route>
-        </Routes>
-      </BrowserRouter>
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </AuthenticationContextProvider>
     </>
   );
 }
