@@ -49,7 +49,10 @@ function App() {
               <Route path="/register" element={<Register />} />
               {/* <Route path="/orders" element={< />} />
             <Route path="/users" element={</>} /> */}
-            <Route path="/inventory" element={<Inventory />} />
+            <Route
+              path="/inventory"
+              element={<Inventory products={products} setProducts={setProducts} />}
+            />
             {/* <Route path="*" element={} /> */}
             </Route>
           </Routes>
