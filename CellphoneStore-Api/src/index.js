@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import dotenv from 'dotenv';
 import { PORT } from "./config.js";
 import productsRoutes from "./routes/products.routes.js";
 import authRoutes from "./routes/auth.routes.js";
@@ -7,6 +8,8 @@ import userRoutes from "./routes/users.routes.js";
 import ordersRoutes from "./routes/orders.routes.js";
 import { sequelize } from "./db.js";
 import { User, Product, Order } from "./models/models.js";
+
+dotenv.config();
 
 const app = express();
 
