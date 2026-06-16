@@ -153,8 +153,8 @@ export const seedProducts = async () => {
       active: true,
       stock: 7,
     },
-    
-  ]);
+
+  ], { ignoreDuplicates: true });
 
   console.log("Productos insertados correctamente.");
 };

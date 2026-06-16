@@ -5,21 +5,28 @@ export const seedSuperAdmin = async () => {
   const adminEmail = process.env.SUPER_ADMIN_EMAIL;
   const adminPassword = process.env.SUPER_ADMIN_PASSWORD;
 
-  const existing = await User.findOne({ where: { email } });
-  if (existing) {
-    console.log("El super-admin ya existe, se omite.");
-    return;
+  if (!adminEmail || !adminPassword) {
+    throw new Error(
+      "Faltan variables de entorno: SUPER_ADMIN_EMAIL y SUPER_ADMIN_PASSWORD",
+    );
   }
 
   const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(plainPassword, salt);
+  const hashedPassword = await bcrypt.hash(adminPassword, salt);
 
-  await User.create({
-    email,
-    password: hashedPassword,
-    role: "super-admin",
-    active: true,
-  });
+  // updateOnDuplicate: si el email ya existe, asciende el rol a super-admin
+  // (sin pisar la contraseña ni el estado). Si no existe, lo crea.
+  await User.bulkCreate(
+    [
+      {
+        email: adminEmail,
+        password: hashedPassword,
+        role: "super-admin",
+        active: true,
+      },
+    ],
+    { updateOnDuplicate: ["role"] },
+  );
 
-  console.log("Super-admin creado correctamente.");
+  console.log("Super-admin sembrado (o ascendido si ya existía).");
 };
