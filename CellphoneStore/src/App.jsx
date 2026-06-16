@@ -10,7 +10,10 @@ import { ToastContainer } from "react-toastify";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 import Inventory from "./components/Products/Inventory";
+import Users from "./components/Users/Users";
 import { AuthenticationContextProvider } from "./components/Services/Auth/AuthContextProvider";
+import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
+import NotFound from "./components/NotFound/NotFound";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -30,6 +33,10 @@ function App() {
       });
   }, []);
 
+  // La tienda (Home/Products) solo muestra productos activos; el panel de
+  // Inventario sigue recibiendo la lista completa para poder reactivarlos.
+  const activeProducts = products.filter((product) => product.active);
+
   return (
     <>
       <AuthenticationContextProvider>
@@ -38,22 +45,36 @@ function App() {
           <Routes>
             <Route element={<Layout />}>
               <Route path="/" element={<Navigate to="/home" replace />} />
-              <Route path="/home" element={<Home productList={products} />} />
+              <Route
+                path="/home"
+                element={<Home productList={activeProducts} />}
+              />
               <Route
                 path="/products"
-                element={<Products productList={products} />}
+                element={<Products productList={activeProducts} />}
               />
               <Route path="/contact-Us" element={<ContactUs />} />
               <Route path="/faq" element={<FaqAccordion />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              {/* <Route path="/orders" element={< />} />
-            <Route path="/users" element={</>} /> */}
-            <Route
-              path="/inventory"
-              element={<Inventory products={products} setProducts={setProducts} />}
-            />
-            {/* <Route path="*" element={} /> */}
+              {/* <Route path="/orders" element={< />} /> */}
+              <Route
+                path="/users"
+                element={
+                  <ProtectedRoute allowedRoles={["admin", "super-admin"]}>
+                    <Users />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/inventory"
+                element={
+                  <ProtectedRoute allowedRoles={["admin", "super-admin"]}>
+                    <Inventory products={products} setProducts={setProducts} />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>
         </BrowserRouter>
