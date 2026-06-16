@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Navigate } from "react-router";
-import { AuthenticationContext } from "./auth.context";
+import { AuthenticationContext } from "../Services/Auth/auth.context";
 
 // Protege una ruta: exige sesión y, opcionalmente, un rol permitido.
 export const ProtectedRoute = ({ allowedRoles, children }) => {

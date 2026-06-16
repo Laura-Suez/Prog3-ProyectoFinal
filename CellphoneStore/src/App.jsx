@@ -12,7 +12,7 @@ import Register from "./components/Auth/Register";
 import Inventory from "./components/Products/Inventory";
 import Users from "./components/Users/Users";
 import { AuthenticationContextProvider } from "./components/Services/Auth/AuthContextProvider";
-import ProtectedRoute from "./components/Services/Auth/ProtectedRoute";
+import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
 import NotFound from "./components/NotFound/NotFound";
 
 function App() {
