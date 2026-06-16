@@ -2,14 +2,14 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { User } from "../models/models.js";
 
-const secretKey = "CellPhone-2025";
-
 // --- MIDDLEWARE ---
 
 export const verifyToken = (req, res, next) => {
   const header = req.header("Authorization") || "";
-  const token = header.split(" ")[1];
+  const token = header.split(" ")[1]; 
+  const secretKey = process.env.JWT_SECRET_KEY;
 
+  // validacion
   if (!token) {
     return res.status(401).json({ message: "No autorizado" });
   }
@@ -64,6 +64,8 @@ export const registerUser = async (req, res) => {
 };
 
 export const loginUser = async (req, res) => {
+  const secretKey = process.env.JWT_SECRET_KEY;
+ 
   const { email, password } = req.body;
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
