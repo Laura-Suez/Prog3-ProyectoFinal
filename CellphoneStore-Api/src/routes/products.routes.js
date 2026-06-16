@@ -14,8 +14,8 @@ router.get("/products", getAllProducts);
 router.get("/products/:id", getProductById);
 router.post(
   "/products",
-  verifyToken,
-  authorizeRoles("admin", "super-admin"),
+  verifyToken, //autenticación: el usuario debe estar logueado
+  authorizeRoles("admin", "super-admin"), //autorización: el usuario debe tener rol admin o super-admin
   createProduct,
 );
 router.put(
