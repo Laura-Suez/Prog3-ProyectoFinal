@@ -3,7 +3,7 @@ import Table from "react-bootstrap/Table";
 import { useCart } from "./useCart";
 import { useNavigate } from "react-router";
 
-const ShoppingCart = () => {
+const CartForm = () => {
   const navigate = useNavigate();
   const {
     cartItems,
@@ -16,7 +16,7 @@ const ShoppingCart = () => {
 
 
 return (
-    <div className="shopping-cart">
+    <div className="CartForm">
         <h1 className="mb-4">Carrito de Compras</h1>
 
         {cartItems.length === 0 ? (
@@ -30,9 +30,9 @@ return (
                         <tr>
                             <th>Producto</th>
                             <th>Precio</th>
-                            <th>Cantidad</th>
+                            <th>Controles / Cantidad</th>
                             <th>Subtotal</th>
-                            <th>Acciones</th>
+                            <th>Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -88,7 +88,7 @@ return (
                         <h4>Total: ${totalPrice.toLocaleString()}</h4>
                     </div>
 
-                    <Button variant="primary" onClick={() => navigate("/checkout")}>
+                    <Button variant="primary" onClick={() => navigate("/Cart/checkout")}>
                         Finalizar compra
                     </Button>
                 </div>
@@ -98,4 +98,4 @@ return (
 );
 };
 
-export default ShoppingCart;
+export default CartForm;

@@ -65,12 +65,14 @@ const Header = () => {
           <Nav className="ms-lg-3 mt-2 mt-lg-0">
             <Nav.Link href="/cart" className="text-dark p-0 position-relative">
               <MdOutlineShoppingCart size={24} />
+              {itemCount > 0 ? (
               <span
                 className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
                 style={{ fontSize: "0.65rem" }}
               >
                 {itemCount}
               </span>
+              ) : null}
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
