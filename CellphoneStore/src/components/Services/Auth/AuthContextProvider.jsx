@@ -4,30 +4,38 @@ import { decodeToken } from "../../Utils/auth";
 
 const tokenValue = "authToken";
 const storedToken = localStorage.getItem(tokenValue);
-const initialUser = storedToken ? decodeToken(storedToken) : null;
+// Asegurarse de que storedToken sea null si está vacío o inválido
+const validToken = storedToken && storedToken.trim() ? storedToken : null;
+const initialUser = validToken ? decodeToken(validToken) : null;
 
 export const AuthenticationContextProvider = ({ children }) => {
-    const [token, setToken] = useState(storedToken);
-    const [user, setUser] = useState(initialUser);
-    const isAuthenticated = !!user; 
+  const [token, setToken] = useState(validToken);
+  const [user, setUser] = useState(initialUser);
+  const isAuthenticated = !!user;
 
-    const handleUserLogin = (token) => {
-        localStorage.setItem(tokenValue, token);
-        setToken(token);
-        setUser(decodeToken(token));
-    };
+  const handleUserLogin = (token) => {
+    localStorage.setItem(tokenValue, token);
+    setToken(token);
+    setUser(decodeToken(token));
+  };
 
-    const handleUserLogout = () => {
-        localStorage.removeItem(tokenValue);
-        setToken(null);
-        setUser(null);
-    };
+  const handleUserLogout = () => {
+    localStorage.removeItem(tokenValue);
+    setToken(null);
+    setUser(null);
+  };
 
-    return (
-    <AuthenticationContext value={{ token, user, handleUserLogin, handleUserLogout, isAuthenticated}}>
-        {children}
+  return (
+    <AuthenticationContext
+      value={{
+        token,
+        user,
+        handleUserLogin,
+        handleUserLogout,
+        isAuthenticated,
+      }}
+    >
+      {children}
     </AuthenticationContext>
-    );
+  );
 };
-    
-
