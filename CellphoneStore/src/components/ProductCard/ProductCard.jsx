@@ -1,7 +1,13 @@
+import { useContext } from "react"; 
+import { CartContext } from "../Cart/CartContext";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
+
 function ProductCard({ product }) {
+
+  const { addToCart } = useContext(CartContext);
+  
   return (
     <Card className="product-card shadow-sm border-0 h-100">
       <Card.Img
@@ -24,9 +30,15 @@ function ProductCard({ product }) {
 
         <h4 className="mt-auto">${product.price.toLocaleString()}</h4>
 
-        <Button variant="dark">Añadir al Carrito</Button>
+        <Button variant="dark" onClick={() => {
+          console.log("Hiciste clic en:", product.name);
+          addToCart(product);
+        }}
+        >
+          Añadir al Carrito
+        </Button>
       </Card.Body>
-    </Card>
+    </Card >
   );
 }
 

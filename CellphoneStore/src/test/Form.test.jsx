@@ -19,19 +19,19 @@ describe("ContacForm", () => {
   test("debe mostrar error si el nombre es muy corto", () => {
     render(<ContacForm />);
 
-    fireEvent.change(screen.getByPlaceholderText("Ej: Juan Pérez"), {
+    fireEvent.change(screen.getByPlaceholderText("Tu nombre completo"), {
       target: { value: "Jo" },
     });
 
-    fireEvent.change(screen.getByPlaceholderText("nombre@correo.com"), {
+    fireEvent.change(screen.getByPlaceholderText("correo@ejemplo.com"), {
       target: { value: "test@gmail.com" },
     });
 
     fireEvent.change(screen.getByPlaceholderText("¿En qué podemos ayudarte?"), {
-      target: { value: "Este es un mensaje válido" },
+      target: { value: "Consulta técnica" },
     });
 
-    fireEvent.click(screen.getByText("Enviar Mensaje"));
+    fireEvent.click(screen.getByText(/Enviar Consulta/i));
 
     expect(errorToast).toHaveBeenCalledWith(
       "Nombre muy corto (mínimo 3 caracteres)",
