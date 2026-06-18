@@ -16,6 +16,7 @@ import { CartProvider } from "./components/Cart/ProviderCart";
 import CheckoutConfirmation from "./components/Cart/CheckoutConfirmation";
 import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
 import NotFound from "./components/NotFound/NotFound";
+import CartForm from "./components/Cart/CartForm";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -80,7 +81,8 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
-                <Route path="*" element={<NotFound />} />
+                <Route path="/Cart" element={<CartForm />} />
+                <Route path="/cart/checkout" element={<CheckoutConfirmation />} />
               </Route>
             </Routes>
           </BrowserRouter>
