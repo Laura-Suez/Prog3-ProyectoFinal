@@ -1,10 +1,25 @@
-import { Order, Product } from "../models/models.js";
+import { Order, Product, User } from "../models/models.js";
 
 // --- MIDDLEWARE ---
 
 // verifyToken importado en orders.routes desde authServices.js, no hace falta repetirlo
 
 // --- SERVICIOS ---
+
+export const getOrders = async (req, res) => {
+  try {
+    const orders = await Order.findAll({
+      include: [
+        { model: User, attributes: ["id", "email"] },
+        { model: Product },
+      ],
+      order: [["createdAt", "DESC"]],
+    });
+    res.json(orders);
+  } catch (error) {
+    res.status(500).json({ message: "Error al obtener las órdenes" });
+  }
+};
 
 export const createOrder = async (req, res) => {
   try {
