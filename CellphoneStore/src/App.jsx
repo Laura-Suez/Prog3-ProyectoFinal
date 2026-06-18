@@ -10,6 +10,7 @@ import { ToastContainer } from "react-toastify";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 import Inventory from "./components/Products/Inventory";
+import Orders from "./components/Orders/Orders";
 import Users from "./components/Users/Users";
 import { AuthenticationContextProvider } from "./components/Services/Auth/AuthContextProvider";
 import { CartProvider } from "./components/Cart/ProviderCart";
@@ -61,7 +62,14 @@ function App() {
                 <Route path="/faq" element={<FaqAccordion />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                {/* <Route path="/orders" element={< />} /> */}
+                <Route
+                                path="/orders"
+                                element={
+                                  <ProtectedRoute allowedRoles={["admin", "super-admin"]}>
+                                    <Orders />
+                                  </ProtectedRoute>
+                                }
+                              />
                 <Route
                   path="/users"
                   element={
