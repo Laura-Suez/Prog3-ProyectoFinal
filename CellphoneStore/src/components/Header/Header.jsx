@@ -30,7 +30,7 @@ const Header = () => {
             {isAuthenticated && user?.role !== "user" && (
               <Nav.Link href="/orders">Ordenes</Nav.Link>
             )}
-            {isAuthenticated && user?.role === "super-admin" && (
+            {isAuthenticated && user?.role !== "user" && (
               <Nav.Link href="/users">Usuarios</Nav.Link>
             )}
             {isAuthenticated && user?.role !== "user" && (
@@ -66,12 +66,12 @@ const Header = () => {
             <Nav.Link href="/cart" className="text-dark p-0 position-relative">
               <MdOutlineShoppingCart size={24} />
               {itemCount > 0 ? (
-              <span
-                className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                style={{ fontSize: "0.65rem" }}
-              >
-                {itemCount}
-              </span>
+                <span
+                  className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                  style={{ fontSize: "0.65rem" }}
+                >
+                  {itemCount}
+                </span>
               ) : null}
             </Nav.Link>
           </Nav>
