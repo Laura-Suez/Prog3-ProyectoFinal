@@ -1,23 +1,44 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
+import Imagen from "../Services/Imagen";
 
 const NotFound = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const t = setTimeout(() => navigate("/home"), 4000);
+    const t = setTimeout(() => navigate("/home"), 10000000);
     return () => clearTimeout(t);
   }, [navigate]);
 
   return (
-    <div className="container mt-5 text-center">
-      <h1 className="display-4">404 - Página no encontrada</h1>
-      <p className="lead">La página que buscas no existe o fue movida.</p>
-      <p>Serás redirigido al inicio en 4 segundos.</p>
-      <div className="mt-3">
-        <button className="btn btn-primary" onClick={() => navigate("/home")}>
-          Volver al inicio ahora
-        </button>
+    <div className="container my-5 d-flex flex-column align-items-center justify-content-center min-vh-75">
+      <div className="text-center" style={{ maxWidth: '700px' }}>
+        <span className="error-background">404</span>
+
+        <h2 className="error-title">ERROR 404</h2>
+
+        <div className="px-3">
+          <p className="text-muted small mb-3">
+            Ups... parece que esta página no existe.
+          </p>
+
+          <div className="error-line"></div>
+
+          <button
+            className="btn btn-dark" variant="dark" onClick={() => navigate("/home")}
+          >
+            Volver al inicio ahora
+          </button>
+        </div>
+
+        <div className="position-relative mb-4">
+          <img
+            src={Imagen.img}
+            alt="404 Página no encontrada - TechPrecise"
+            className="img-fluid"
+          />
+        </div>
+
       </div>
     </div>
   );
