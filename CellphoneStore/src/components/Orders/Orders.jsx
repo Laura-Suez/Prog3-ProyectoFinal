@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import Badge from "react-bootstrap/Badge";
+import Modal from "react-bootstrap/Modal";
 import { AuthenticationContext } from "../Services/Auth/auth.context";
 import { errorToast, successToast } from "../Notification/Notification";
 
@@ -12,6 +13,8 @@ const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState(null);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
 
   useEffect(() => {
     fetch(API_URL, { headers: { Authorization: `Bearer ${token}` } })
@@ -24,9 +27,21 @@ const Orders = () => {
       .finally(() => setLoading(false));
   }, [token]);
 
-  const handleDelete = async (order) => {
-    if (!window.confirm(`¿Querés eliminar la orden #${order.id}?`)) return;
+  const openConfirm = (order) => {
+    setSelectedOrder(order);
+    setShowConfirm(true);
+  };
 
+  const handleCloseConfirm = () => {
+    setShowConfirm(false);
+    setSelectedOrder(null);
+  };
+
+  const handleDelete = async () => {
+    if (!selectedOrder) return;
+
+    const order = selectedOrder;
+    setShowConfirm(false);
     setDeletingId(order.id);
 
     try {
@@ -46,6 +61,7 @@ const Orders = () => {
       errorToast(err.message);
     } finally {
       setDeletingId(null);
+      setSelectedOrder(null);
     }
   };
 
@@ -101,7 +117,7 @@ const Orders = () => {
                     size="sm"
                     variant="outline-danger"
                     disabled={deletingId === order.id}
-                    onClick={() => handleDelete(order)}
+                    onClick={() => openConfirm(order)}
                   >
                     {deletingId === order.id ? "Eliminando..." : "Eliminar"}
                   </Button>
@@ -111,6 +127,24 @@ const Orders = () => {
           </tbody>
         </Table>
       )}
+      <Modal show={showConfirm} onHide={handleCloseConfirm} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmar eliminación</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>¿Querés eliminar la orden #{selectedOrder?.id}?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseConfirm}>
+            Cancelar
+          </Button>
+          <Button
+            variant="danger"
+            onClick={handleDelete}
+            disabled={deletingId === selectedOrder?.id}
+          >
+            {deletingId === selectedOrder?.id ? "Eliminando..." : "Eliminar"}
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
