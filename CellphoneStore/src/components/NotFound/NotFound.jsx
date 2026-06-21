@@ -6,7 +6,7 @@ const NotFound = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const t = setTimeout(() => navigate("/home"), 10000000);
+    const t = setTimeout(() => navigate("/home"), 10);
     return () => clearTimeout(t);
   }, [navigate]);
 

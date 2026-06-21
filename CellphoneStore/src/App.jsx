@@ -91,8 +91,8 @@ function App() {
                 />
                 <Route path="/Cart" element={<CartForm />} />
                 <Route path="/cart/checkout" element={<CheckoutConfirmation />} />
-                <Route path="*" element={<NotFound/>}/>
               </Route>
+              <Route path="*" element={<NotFound />}/>
             </Routes>
           </BrowserRouter>
         </CartProvider>
