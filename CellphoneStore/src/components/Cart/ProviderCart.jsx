@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { CartContext } from "./CartContext";
+import { toast } from "react-toastify";
 
 export const CartProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState(() => {
@@ -17,8 +18,15 @@ export const CartProvider = ({ children }) => {
     }, [cartItems]);
 
     const addToCart = (product) => {
+        const existing = cartItems.find((item) => item.id === product.id);
+
+        if (existing) {
+            toast.info(`Se agregó un item más del producto: ${product.name}`);
+        } else {
+            toast.success(`${product.name} agregado al carrito`);
+        }
+
         setCartItems((prevItems) => {
-            const existing = prevItems.find((item) => item.id === product.id);
             if (existing) {
                 return prevItems.map((item) =>
                     item.id === product.id
@@ -44,7 +52,7 @@ export const CartProvider = ({ children }) => {
             return;
         }
 
-    //setea nueva cantidad de items meintras item.id === proudctId
+        //setea nueva cantidad de items meintras item.id === proudctId
         setCartItems((prevItems) =>
             prevItems.map((item) =>
                 item.id === productId ? { ...item, quantity } : item,
@@ -70,6 +78,6 @@ export const CartProvider = ({ children }) => {
         totalPrice,
     };
 
-  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
+    return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
 
