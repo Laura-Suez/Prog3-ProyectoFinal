@@ -2,9 +2,11 @@ import React, { useState, useContext } from "react";
 import Table from "react-bootstrap/Table";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 import { AuthenticationContext } from "../Services/Auth/auth.context";
 import { errorToast, successToast } from "../Notification/Notification";
 
+// Estado inicial del formulario (también se usa para limpiarlo tras guardar)
 const initialProductForm = {
   name: "",
   image: "",
@@ -18,16 +20,21 @@ const initialProductForm = {
 const CATEGORIES = ["Celulares", "Accesorios"];
 
 const Inventory = ({ products = [], setProducts }) => {
-  const { token } = useContext(AuthenticationContext);
-  const [productForm, setProductForm] = useState(initialProductForm);
-  const [editingProductId, setEditingProductId] = useState(null);
-  const [savingProduct, setSavingProduct] = useState(false);
+  const { token } = useContext(AuthenticationContext); // credencial para los pedidos protegidos
+  const [productForm, setProductForm] = useState(initialProductForm); // datos del formulario
+  const [editingProductId, setEditingProductId] = useState(null); // si tiene id, estamos editando; si es null, creando
+  const [savingProduct, setSavingProduct] = useState(false); // deshabilita el botón mientras se guarda
+  const [productToToggle, setProductToToggle] = useState(null); // producto pendiente de dar de baja/reactivar
+  const [togglingId, setTogglingId] = useState(null); // id del producto cuyo estado se está cambiando
 
+  // Vuelve el formulario a su estado inicial y sale del modo edición.
   const resetForm = () => {
     setProductForm(initialProductForm);
     setEditingProductId(null);
   };
 
+  // Actualiza el campo del formulario que el usuario está modificando.
+  // Para el switch "Activo" usamos `checked` en vez de `value`.
   const handleInputChange = (event) => {
     const { name, value, type, checked } = event.target;
     setProductForm((current) => ({
@@ -36,6 +43,7 @@ const Inventory = ({ products = [], setProducts }) => {
     }));
   };
 
+  // Carga los datos de un producto en el formulario para editarlo.
   const handleEditProduct = (product) => {
     setEditingProductId(product.id);
     setProductForm({
@@ -49,9 +57,11 @@ const Inventory = ({ products = [], setProducts }) => {
     });
   };
 
+  // Guarda el producto: crea uno nuevo (POST) o actualiza el existente (PUT).
   const handleSaveProduct = async (event) => {
-    event.preventDefault();
+    event.preventDefault(); // evita que el formulario recargue la página
 
+    // Validación de campos obligatorios antes de enviar al backend.
     if (
       !productForm.name ||
       !productForm.image ||
@@ -68,6 +78,7 @@ const Inventory = ({ products = [], setProducts }) => {
       return;
     }
 
+    // Convertimos precio y stock a número antes de mandarlos.
     const payload = {
       name: productForm.name,
       image: productForm.image,
@@ -81,6 +92,7 @@ const Inventory = ({ products = [], setProducts }) => {
     setSavingProduct(true);
 
     try {
+      // Si estamos editando usamos PUT sobre el id; si no, POST para crear.
       const method = editingProductId ? "PUT" : "POST";
       const url = editingProductId
         ? `http://localhost:3000/products/${editingProductId}`
@@ -111,12 +123,14 @@ const Inventory = ({ products = [], setProducts }) => {
         );
         successToast("Producto actualizado correctamente.");
       } else {
+        // Al crear, el backend sí devuelve el producto nuevo (con su id),
+        // así que lo agregamos a la lista existente.
         const newProduct = await response.json();
         setProducts((current) => [...current, newProduct]);
         successToast("Producto creado correctamente.");
       }
 
-      resetForm();
+      resetForm(); // limpiamos el formulario para la próxima carga
     } catch (err) {
       errorToast(err.message);
     } finally {
@@ -124,17 +138,29 @@ const Inventory = ({ products = [], setProducts }) => {
     }
   };
 
-  const handleToggleActive = async (product) => {
+  // Abre el modal de confirmación recordando qué producto se quiere cambiar.
+  const openToggleConfirm = (product) => {
     if (!token) {
       errorToast("Necesitás iniciar sesión como administrador.");
       return;
     }
+    setProductToToggle(product);
+  };
 
-    const nextActive = !product.active;
-    const action = nextActive ? "reactivar" : "dar de baja";
+  // Cierra el modal y olvida el producto seleccionado.
+  const closeToggleConfirm = () => {
+    setProductToToggle(null);
+  };
 
-    if (!window.confirm(`¿Querés ${action} el producto "${product.name}"?`))
-      return;
+  // Da de baja o reactiva el producto seleccionado cambiando su flag `active`
+  // (baja lógica). Se ejecuta al confirmar en el modal.
+  const confirmToggleActive = async () => {
+    if (!productToToggle) return;
+
+    const product = productToToggle;
+    const nextActive = !product.active; // invertimos el estado actual
+    setProductToToggle(null);
+    setTogglingId(product.id); // marcamos este producto como "en proceso de cambio"
 
     try {
       // Baja lógica: actualizamos el flag `active` en vez de borrar el producto.
@@ -170,6 +196,8 @@ const Inventory = ({ products = [], setProducts }) => {
       );
     } catch (err) {
       errorToast(err.message);
+    } finally {
+      setTogglingId(null);
     }
   };
 
@@ -180,7 +208,9 @@ const Inventory = ({ products = [], setProducts }) => {
         Aquí puedes gestionar tus productos.
       </p>
 
+      {/* Sección 1: formulario para crear o editar un producto */}
       <section className="mb-5">
+        {/* El título cambia según estemos creando o editando */}
         <h2>{editingProductId ? "Editar producto" : "Agregar producto"}</h2>
         <Form onSubmit={handleSaveProduct}>
           <div className="row gy-3">
@@ -287,6 +317,7 @@ const Inventory = ({ products = [], setProducts }) => {
         </Form>
       </section>
 
+      {/* Sección 2: tabla con todos los productos cargados */}
       <section>
         <h2 className="mb-4">Productos existentes</h2>
         <Table responsive bordered hover className="align-middle">
@@ -311,6 +342,7 @@ const Inventory = ({ products = [], setProducts }) => {
                 <td>{product.stock}</td>
                 <td>{product.active ? "Sí" : "No"}</td>
                 <td className="d-flex gap-2">
+                  {/* Botón Editar: carga el producto en el formulario de arriba */}
                   <Button
                     size="sm"
                     variant="outline-primary"
@@ -318,10 +350,14 @@ const Inventory = ({ products = [], setProducts }) => {
                   >
                     Editar
                   </Button>
+                  {/* Botón que alterna entre dar de baja y reactivar según el estado */}
                   <Button
                     size="sm"
-                    variant={product.active ? "outline-danger" : "outline-success"}
-                    onClick={() => handleToggleActive(product)}
+                    variant={
+                      product.active ? "outline-danger" : "outline-success"
+                    }
+                    disabled={togglingId === product.id}
+                    onClick={() => openToggleConfirm(product)}
                   >
                     {product.active ? "Dar de baja" : "Reactivar"}
                   </Button>
@@ -331,6 +367,28 @@ const Inventory = ({ products = [], setProducts }) => {
           </tbody>
         </Table>
       </section>
+
+      {/* Modal de confirmación: pide aprobar antes de dar de baja o reactivar */}
+      <Modal show={!!productToToggle} onHide={closeToggleConfirm} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmar eliminación</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          ¿Querés eliminar el producto #{productToToggle?.id}?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={closeToggleConfirm}>
+            Cancelar
+          </Button>
+          <Button
+            variant="danger"
+            onClick={confirmToggleActive}
+            disabled={togglingId === productToToggle?.id}
+          >
+            {togglingId === productToToggle?.id ? "Eliminando..." : "Eliminar"}
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
