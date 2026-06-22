@@ -63,13 +63,13 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route
-                                path="/orders"
-                                element={
-                                  <ProtectedRoute allowedRoles={["admin", "super-admin"]}>
-                                    <Orders />
-                                  </ProtectedRoute>
-                                }
-                              />
+                  path="/orders"
+                  element={
+                    <ProtectedRoute allowedRoles={["admin", "super-admin"]}>
+                      <Orders />
+                    </ProtectedRoute>
+                  }
+                />
                 <Route
                   path="/users"
                   element={
@@ -90,7 +90,10 @@ function App() {
                   }
                 />
                 <Route path="/Cart" element={<CartForm />} />
-                <Route path="/cart/checkout" element={<CheckoutConfirmation />} />
+                <Route
+                  path="/cart/checkout"
+                  element={<CheckoutConfirmation />}
+                />
               </Route>
             </Routes>
           </BrowserRouter>
