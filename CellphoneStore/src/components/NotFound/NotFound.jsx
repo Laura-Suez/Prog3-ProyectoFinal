@@ -6,13 +6,13 @@ const NotFound = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const t = setTimeout(() => navigate("/home"), 10);
+    const t = setTimeout(() => navigate("/home"), 10000);
     return () => clearTimeout(t);
   }, [navigate]);
 
   return (
     <div className="container my-5 d-flex flex-column align-items-center justify-content-center min-vh-75">
-      <div className="text-center" style={{ maxWidth: '700px' }}>
+      <div className="text-center" style={{ maxWidth: "700px" }}>
         <span className="error-background">404</span>
 
         <h2 className="error-title">ERROR 404</h2>
@@ -25,7 +25,9 @@ const NotFound = () => {
           <div className="error-line"></div>
 
           <button
-            className="btn btn-dark" variant="dark" onClick={() => navigate("/home")}
+            className="btn btn-dark"
+            variant="dark"
+            onClick={() => navigate("/home")}
           >
             Volver al inicio ahora
           </button>
@@ -38,7 +40,6 @@ const NotFound = () => {
             className="img-fluid"
           />
         </div>
-
       </div>
     </div>
   );

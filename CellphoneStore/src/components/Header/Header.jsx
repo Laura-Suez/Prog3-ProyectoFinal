@@ -3,6 +3,7 @@ import { FaRegUser } from "react-icons/fa";
 import { BiSun, BiMoon } from "react-icons/bi";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { useContext } from "react";
+import { useNavigate } from "react-router";
 import { AuthenticationContext } from "../Services/Auth/auth.context";
 import { CartContext } from "../Cart/CartContext";
 
@@ -11,6 +12,12 @@ const Header = () => {
     AuthenticationContext,
   );
   const { itemCount } = useContext(CartContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    handleUserLogout();
+    navigate("/login");
+  };
 
   return (
     <Navbar expand="lg" bg="white" variant="light" className="sticky-top">
@@ -49,7 +56,7 @@ const Header = () => {
                 <FaRegUser size={14} className="me-1" />
                 {user.email}
               </span>
-              <Nav.Link onClick={handleUserLogout} className="text-dark p-0">
+              <Nav.Link onClick={handleLogout} className="text-dark p-0">
                 Salir
               </Nav.Link>
             </Nav>
