@@ -2,6 +2,7 @@ import { useNavigate } from "react-router";
 import { useState, useRef } from "react";
 import { Card, Form, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import { errorToast, successToast } from "../Notification/Notification";
 
@@ -11,6 +12,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({ email: false, password: false });
+  const [showPassword, setShowPassword] = useState(false);
 
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
@@ -150,22 +152,41 @@ const Register = () => {
                 Contraseña
               </Form.Label>
 
-              <Form.Control
-                type="password"
-                placeholder="Ingresa tu contraseña"
-                value={password}
-                onChange={handlePasswordChange}
-                ref={passwordRef}
-                className={errors.password ? "border border-danger" : ""}
-                style={{
-                  height: "55px",
-                  borderRadius: "8px",
-                }}
-              />
+              <div className="position-relative">
+                <Form.Control
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Ingresa tu contraseña"
+                  value={password}
+                  onChange={handlePasswordChange}
+                  ref={passwordRef}
+                  className={errors.password ? "border border-danger" : ""}
+                  style={{
+                    height: "55px",
+                    borderRadius: "8px",
+                    paddingRight: "50px",
+                  }}
+                />
+
+                <span
+                  onClick={() => setShowPassword(!showPassword)}
+                  style={{
+                    position: "absolute",
+                    right: "15px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    cursor: "pointer",
+                    color: "#6c757d",
+                    fontSize: "1.1rem",
+                    zIndex: 10,
+                  }}
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
+              </div>
 
               {errors.password && (
                 <p className="text-danger mt-2 mb-0">
-                  Debes completar la contraseña con al menos 7 caracteres, una
+                  Debes completar la contraseña con al menos 8 caracteres, una
                   mayúscula y un número.
                 </p>
               )}
