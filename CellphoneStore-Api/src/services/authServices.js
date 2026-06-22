@@ -2,55 +2,24 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { User } from "../models/models.js";
 
-// --- MIDDLEWARE ---
-
-export const verifyToken = (req, res, next) => {
-  const header = req.header("Authorization") || "";
-  const token = header.split(" ")[1]; 
-  const secretKey = process.env.JWT_SECRET_KEY;
-
-  // validacion
-  if (!token) {
-    return res.status(401).json({ message: "No autorizado" });
-  }
-
-  try {
-    const payload = jwt.verify(token, secretKey);
-    req.user = payload;
-    next();
-  } catch {
-    return res.status(401).json({ message: "Token inválido" });
-  }
-};
-
-export const authorizeRoles = (...allowedRoles) => {
-  return (req, res, next) => {
-    if (!req.user || !allowedRoles.includes(req.user.role)) {
-      return res
-        .status(403)
-        .json({ message: "No tenés permisos para realizar esta acción" });
-    }
-    next();
-  };
-};
-
 // --- SERVICIOS ---
 
 export const registerUser = async (req, res) => {
+  const { email, password } = req.body;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+// validacion de mail y password antes de continuar con el registro 
+  if (!email || !emailRegex.test(email))
+    return res.status(400).json({ message: "El email no es válido" });
+  
+  if (!password || !passwordRegex.test(password))
+    return res.status(400).json({
+      message:
+        "La contraseña debe tener al menos 8 caracteres, una mayúscula y un número",
+    });
+
   try {
-    const { email, password } = req.body;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
-
-    if (!email || !emailRegex.test(email))
-      return res.status(400).json({ message: "El email no es válido" });
-
-    if (!password || !passwordRegex.test(password))
-      return res.status(400).json({
-        message:
-          "La contraseña debe tener al menos 8 caracteres, una mayúscula y un número",
-      });
-
     const user = await User.findOne({ where: { email } });
 
     if (user)
@@ -70,18 +39,17 @@ export const registerUser = async (req, res) => {
 };
 
 export const loginUser = async (req, res) => {
+  const secretKey = process.env.JWT_SECRET_KEY;
+  const { email, password } = req.body;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  
+  if (!email || !emailRegex.test(email))
+    return res.status(400).json({ message: "El email no es válido" });
+
+  if (!password)
+    return res.status(400).json({ message: "La contraseña es obligatoria" });
+
   try {
-    const secretKey = process.env.JWT_SECRET_KEY;
-
-    const { email, password } = req.body;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!email || !emailRegex.test(email))
-      return res.status(400).json({ message: "El email no es válido" });
-
-    if (!password)
-      return res.status(400).json({ message: "La contraseña es obligatoria" });
-
     const user = await User.findOne({ where: { email } });
 
     if (!user) return res.status(401).json({ message: "Usuario no existente" });

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { getUsers, updateUser, deleteUser } from "../services/userServices.js";
-import { verifyToken, authorizeRoles } from "../services/authServices.js";
+import { verifyToken, authorizeRoles } from "../middleware/authMiddleware.js";
 
 const router = Router();
 

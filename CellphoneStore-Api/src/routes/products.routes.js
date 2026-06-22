@@ -6,7 +6,7 @@ import {
   updateProduct,
   deleteProduct,
 } from "../services/productsServices.js";
-import { verifyToken, authorizeRoles } from "../services/authServices.js";
+import { verifyToken, authorizeRoles } from "../middleware/authMiddleware.js";
 
 const router = Router();
 

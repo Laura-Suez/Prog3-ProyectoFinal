@@ -15,7 +15,7 @@ const initialProductForm = {
   stock: "",
 };
 
-const CATEGORIES = ["Cellphones", "Accesories"];
+const CATEGORIES = ["Celulares", "Accesorios"];
 
 const Inventory = ({ products = [], setProducts }) => {
   const { token } = useContext(AuthenticationContext);
